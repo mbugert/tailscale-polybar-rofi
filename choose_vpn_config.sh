@@ -21,11 +21,11 @@ options[" down"]="down"
 
 # get tailscale status, then add one rofi option per available exit node
 status=$(curl --silent --fail --unix-socket /run/tailscale/tailscaled.sock http://tailscale/localapi/v0/status)
-for hostname in $(echo ${status} | jq --raw-output '.Peer[] | select(.ExitNodeOption) | .HostName'); do
-    options[" up (${hostname} as exit node)"]="up \
+for dnsname in $(echo ${status} | jq --raw-output '.Peer[] | select(.ExitNodeOption) | .DNSName'); do
+    options[" up (${dnsname} as exit node)"]="up \
                                                 --login-server ${TAILSCALE_LOGIN_SERVER} \
                                                 --operator ${TAILSCALE_OPERATOR} \
-                                                --exit-node ${hostname} \
+                                                --exit-node ${dnsname} \
                                                 --accept-routes \
                                                 --shields-up \
                                                 --reset"

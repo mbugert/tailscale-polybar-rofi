@@ -3,7 +3,7 @@
 ICON_ACTIVE=""
 ICON_INACTIVE=""
 
-status=$(curl --silent --fail --unix-socket /run/tailscale/tailscaled.sock http://tailscale/localapi/v0/status)
+status=$(curl --silent --fail --unix-socket /var/run/tailscale/tailscaled.sock http://local-tailscaled.sock/localapi/v0/status)
 
 # bail out if curl had non-zero exit code
 if [ $? != 0 ]; then
